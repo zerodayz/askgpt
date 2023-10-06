@@ -63,5 +63,7 @@ def save_log(log_name, arg, code_uuid, text):
 
 
 def save_code(code_name, code_uuid, text):
-    with open(os.path.join(CODE_DIR, f"{code_name}_{code_uuid}.py"), "w") as f:
+    code_directory = os.path.join(CODE_DIR, code_uuid)
+    os.makedirs(code_directory, exist_ok=True)
+    with open(os.path.join(code_directory, f"{code_name}.py"), "w") as f:
         f.write(text)
