@@ -7,8 +7,8 @@ import openai
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 API_KEY_PATH = os.path.join(DIR_PATH, "api_key.txt")
-LOG_DIR = os.path.join(DIR_PATH, "gpt-logs")
-CODE_DIR = os.path.join(DIR_PATH, "gpt-code")
+LOG_DIR = os.path.join(DIR_PATH, "logs")
+CODE_DIR = os.path.join(DIR_PATH, "code")
 
 gpt_system_role = "system"
 gpt_user_role = "user"
