@@ -19,9 +19,15 @@ messages = [
         gpt_utils.gpt_user_role,
         f"Answer with only the actual code snippet without any intro "
         f"or explanation. "
-        f"What is the safest python code to {arg}",
+        f"{arg}",
     ),
 ]
+
+content = sys.stdin.read()
+code_uuid, content = gpt_utils.extract_uuid_and_content(content)
+messages.append(
+    gpt_utils.create_openai_message(gpt_utils.gpt_user_role, content)
+)
 
 r = openai.ChatCompletion.create(
     model="gpt-3.5-turbo", temperature=0, messages=messages
@@ -31,8 +37,8 @@ text, lang = gpt_utils.extract_code_from_response(text)
 
 code_uuid = str(uuid.uuid4())
 
-gpt_utils.save_log("askgpt.log", arg, code_uuid, text)
-gpt_utils.save_code("askgpt", code_uuid, text, lang=lang)
+gpt_utils.save_log("perform.log", arg, code_uuid, text)
+gpt_utils.save_code("perform", code_uuid, text, lang)
 
 print(f"START_UUID:{code_uuid}:END_UUID")
 print(text)

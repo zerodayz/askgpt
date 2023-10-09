@@ -29,8 +29,8 @@ r = openai.ChatCompletion.create(
 code_uuid = str(uuid.uuid4())
 
 text = r["choices"][0]["message"]["content"]
-text = gpt_utils.extract_code_from_response(text)
+text, lang = gpt_utils.extract_code_from_response(text)
 
-gpt_utils.save_log("howto.log", arg, code_uuid, text)
+gpt_utils.save_log("howto.log", arg, code_uuid, text, lang)
 
 print(text)

@@ -27,8 +27,8 @@ r = openai.ChatCompletion.create(
 
 text = r["choices"][0]["message"]["content"]
 gpt_utils.save_log("tests.log", content, code_uuid, text)
-text = gpt_utils.extract_code_from_response(text)
-gpt_utils.save_code("test", code_uuid, text)
+text, lang = gpt_utils.extract_code_from_response(text)
+gpt_utils.save_code("test", code_uuid, text, lang)
 
 print(f"START_UUID:{code_uuid}:END_UUID")
 print(text)

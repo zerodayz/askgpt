@@ -34,10 +34,23 @@ def extract_code_from_response(response_text):
     if "```python" in response_text:
         code = response_text.split("```python")[1]
         code = code.split("```")[0]
-        return code
+        language = "py"
+        return code, language
+    elif "```go" in response_text:
+        code = response_text.split("```go")[1]
+        code = code.split("```")[0]
+        language = "go"
+        return code, language
+    elif "``go" in response_text:
+        code = response_text.split("``go")[1]
+        code = code.split("``")[0]
+        language = "go"
+        return code, language
     elif response_text.startswith("`") and response_text.endswith("`"):
-        return response_text[1:-1]
-    return response_text
+        language = "sh"
+        return response_text[1:-1], language
+    language = "txt"
+    return response_text, language
 
 
 def extract_uuid_and_content(content):
@@ -62,8 +75,8 @@ def save_log(log_name, arg, code_uuid, text):
         f.write(text + "\n")
 
 
-def save_code(code_name, code_uuid, text):
+def save_code(code_name, code_uuid, text, lang):
     code_directory = os.path.join(CODE_DIR, code_uuid)
     os.makedirs(code_directory, exist_ok=True)
-    with open(os.path.join(code_directory, f"{code_name}.py"), "w") as f:
+    with open(os.path.join(code_directory, f"{code_name}.{lang}"), "w") as f:
         f.write(text)

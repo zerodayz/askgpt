@@ -10,8 +10,7 @@ messages = [
     gpt_utils.create_openai_message(
         gpt_utils.gpt_system_role,
         "You will be provided with a piece of Python code, "
-        "and your task is to find and fix bugs in it. "
-        "Answer with only the fixed code without any intro or explanation.",
+        "and your task is to find and fix bugs in it.",
     ),
 ]
 
@@ -27,8 +26,8 @@ r = openai.ChatCompletion.create(
 
 text = r["choices"][0]["message"]["content"]
 gpt_utils.save_log("findbugs.log", content, code_uuid, text)
-text = gpt_utils.extract_code_from_response(text)
-gpt_utils.save_code("findbugs", code_uuid, text)
+text, lang = gpt_utils.extract_code_from_response(text)
+gpt_utils.save_code("findbugs", code_uuid, text, lang)
 
 print(f"START_UUID:{code_uuid}:END_UUID")
 print(text)
